@@ -1,14 +1,24 @@
 from rest_framework import serializers
-from .models import Game, Genre, Platform, Publisher, Developer, GameInstance
+from .models import (Profile, Profile_Match, Profile_BLock, Game, Platform, Genre_Scores, )
+
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = '__all__'
+
+class Profile_MatchSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile_Match
+        fields = '__all__'
+
+class Profile_BLockSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile_BLock
+        fields = '__all__'
 
 class GameSerializer(serializers.ModelSerializer):
     class Meta:
         model = Game
-        fields = '__all__'
-
-class GenreSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Genre
         fields = '__all__'
 
 class PlatformSerializer(serializers.ModelSerializer):
@@ -16,18 +26,11 @@ class PlatformSerializer(serializers.ModelSerializer):
         model = Platform
         fields = '__all__'
 
-class PublisherSerializer(serializers.ModelSerializer):
+class Genre_ScoresSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Publisher
+        model = Genre_Scores
         fields = '__all__'
 
-class DeveloperSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Developer
-        fields = '__all__'
 
-class GameInstanceSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = GameInstance
-        fields = '__all__'
-        
+
+
