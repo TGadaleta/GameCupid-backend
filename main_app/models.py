@@ -27,21 +27,33 @@ class Profile(models.Model):
     city = models.CharField()
     location = models.CharField()
 
+    def __str__(self):
+        return f"Profile for username {self.user.username}."
+
 class Profile_Match(models.Model):
     profile_id = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='match_initiated')
     match_profile_id =  models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='match_recieved')
     date_matched = models.DateField()
+        
+    def __str__(self):
+        return f"{self.profile_id.user} matched {self.match_profile_id.user} on {self.date_matched}."
 
 class Profile_BLock(models.Model):
     profile_id = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='block_initiated')
     blocked_profile_id = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='block_recieved')
     date_blocked = models.DateField()
 
+    def __str__(self):
+        return f"{self.profile_id.user} blocked {self.blocked_profile_id.user} on {self.date_blocked}."
+
 class Game(models.Model):
     profile_id = models.ForeignKey(Profile, on_delete=models.CASCADE)
     title = models.CharField()
     fav_rank = models.IntegerField()
 
+    def __str__(self):
+        return f"{self.profile_id.user.username} number {self.fav_rank} game - {self.title}" 
+    
 class Platform(models.Model):
     profile_id = models.ForeignKey(Profile, on_delete=models.CASCADE)
     brand = models.CharField(
@@ -49,6 +61,9 @@ class Platform(models.Model):
         default = PLATFORMS[0][0]
     )
     tag = models.CharField()
+
+    def __str__(self):
+        return f"On {self.brand}, user {self.profile_id.user.username} tag is {self.tag}."
 
 class Genre_Scores(models.Model):
     profile_id = models.ForeignKey(Profile, on_delete=models.CASCADE)
