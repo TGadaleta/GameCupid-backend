@@ -6,9 +6,10 @@ class ProfileSerializer(serializers.ModelSerializer):
     username = serializers.CharField(source='user.username')
     email = serializers.EmailField(source='user.email')
     password = serializers.CharField(source='user.password', write_only=True)
+
     class Meta:
         model = Profile
-        fields = '__all__'
+        fields = ['id', 'username', 'email', 'gender', 'city', 'location']
     
     def create(self, validated_data):
         user_data = validated_data.pop('user')
@@ -17,17 +18,19 @@ class ProfileSerializer(serializers.ModelSerializer):
         return profile
     
     def update(self, instance, validated_data):
-        user_data = validated_data.pop('user', None)
-        if user_data:
-            for attr, value in user_data.items():
-                setattr(instance.user, attr, value)
-            instance.user.save()
-
-    def delete(self, instance):
+        # Handle nested user fields
+        user_data = validated_data.pop('user', {})
         user = instance.user
-        instance.delete()
-        user.delete
-        
+        for attr, value in user_data.items():
+            setattr(user, attr, value)
+        user.save()
+
+        # Handle Profile fields
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        instance.save()
+
+        return instance
 
 class Profile_MatchSerializer(serializers.ModelSerializer):
     class Meta:
@@ -53,7 +56,3 @@ class Genre_ScoresSerializer(serializers.ModelSerializer):
     class Meta:
         model = Genre_Scores
         fields = '__all__'
-
-
-
-
