@@ -33,11 +33,14 @@ class ProfileSerializer(serializers.ModelSerializer):
         return instance
 
 class Profile_MatchSerializer(serializers.ModelSerializer):
+    profile = serializers.PrimaryKeyRelatedField(read_only=True)
+
     class Meta:
         model = Profile_Match
         fields = '__all__'
 
 class Profile_BLockSerializer(serializers.ModelSerializer):
+    profile = serializers.PrimaryKeyRelatedField(read_only=True)
     class Meta:
         model = Profile_BLock
         fields = '__all__'
