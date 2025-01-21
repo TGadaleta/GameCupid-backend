@@ -1,6 +1,5 @@
 from rest_framework import serializers
-from .models import (Profile, Profile_Match, Profile_Block, Game, Platform, Genre_Scores, )
-from django.contrib.auth.models import User
+from .models import (Profile, Profile_Match, Profile_Block, Game, Platform, Genre_Scores, User)
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -23,11 +22,10 @@ class ProfileSerializer(serializers.ModelSerializer):
     username = serializers.CharField(source='user.username')
     email = serializers.EmailField(source='user.email')
     password = serializers.CharField(source='user.password', write_only=True)
-    user = serializers.PrimaryKeyRelatedField(read_only=True) # Make the user field read-only to prevent nested user creation
 
     class Meta:
         model = Profile
-        fields = ['id', 'username', 'email', 'gender', 'city', 'location']
+        fields = ['id', 'username', 'email', 'gender', 'city']
     
     def create(self, validated_data):
         user_data = validated_data.pop('user')

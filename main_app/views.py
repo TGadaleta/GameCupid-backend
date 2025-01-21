@@ -1,11 +1,10 @@
 from rest_framework.views import APIView
-from .models import Profile, Game, Platform, Profile_Match, Profile_Block
+from .models import Profile, Game, Platform, Profile_Match, Profile_Block, User, Genre_Scores
 from rest_framework.response import Response
 from rest_framework import generics, status, permissions
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
 from rest_framework.exceptions import PermissionDenied
-from django.contrib.auth.models import User
 from .serializers import UserSerializer, PlatformSerializer, Profile_BlockSerializer, Profile_MatchSerializer, GameSerializer, Genre_ScoresSerializer, ProfileSerializer
 
 
@@ -64,7 +63,7 @@ class ProfileView(generics.ListAPIView):
 
   def get_queryset(self):
     user = self.request.user.id
-    return Profile.objects.filter(user=user)
+    return Profile.objects.filter(user=user).first()
   
 class ProfileEdit(generics.RetrieveUpdateAPIView):
   serializer_class = ProfileSerializer
@@ -139,4 +138,4 @@ class GenreScoresEdit(generics.RetrieveUpdateAPIView):
 
   def get_queryset(self):
     profile_id = self.get_object()
-    return GenreScores.objects.filter(profile_id=profile_id)
+    return Genre_Scores.objects.filter(profile_id=profile_id)
