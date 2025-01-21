@@ -6,7 +6,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
 from rest_framework.exceptions import PermissionDenied
 from django.contrib.auth.models import User
-zer, Profile_BlockSerializer, Profile_MatchSerializer, GameSerializer, Genre_ScoresSerializer, ProfileSerializer
+from .serializers import UserSerializer, PlatformSerializer, Profile_BlockSerializer, Profile_MatchSerializer, GameSerializer, Genre_ScoresSerializer, ProfileSerializer
 
 
 class CreateUserView(generics.CreateAPIView):
@@ -125,7 +125,7 @@ class ProfileBlocksList(generics.RetrieveUpdateAPIView):
 
   def get_queryset(self):
     profile_id = self.get_object()
-    return Profile_BLock.objects.filter(profile_id=profile_id)
+    return Profile_Block.objects.filter(profile_id=profile_id)
   
 class GenreScores(generics.ListAPIView):
   serializer_class = Genre_ScoresSerializer
