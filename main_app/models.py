@@ -63,6 +63,9 @@ class Platform(models.Model):
         default = PLATFORMS[0][0]
     )
     tag = models.CharField()
+    
+    def __str__(self):
+        return f"{self.profile_id.user.username} on {self.brand} is named {self.tag}."
 
     def __str__(self):
         return f"On {self.brand}, user {self.profile_id.user.username} tag is {self.tag}."
