@@ -40,7 +40,7 @@ class Profile_Match(models.Model):
     def __str__(self):
         return f"{self.profile_id.user} matched {self.match_profile_id.user} on {self.date_matched}."
 
-class Profile_BLock(models.Model):
+class Profile_Block(models.Model):
     profile_id = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='block_initiated')
     blocked_profile_id = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='block_recieved')
     date_blocked = models.DateField()
@@ -52,6 +52,9 @@ class Game(models.Model):
     profile_id = models.ForeignKey(Profile, on_delete=models.CASCADE)
     title = models.CharField()
     fav_rank = models.IntegerField()
+
+    class Meta:
+        ordering = ['fav_rank']
 
     def __str__(self):
         return f"{self.profile_id.user.username} number {self.fav_rank} game - {self.title}" 
@@ -71,7 +74,7 @@ class Platform(models.Model):
         return f"On {self.brand}, user {self.profile_id.user.username} tag is {self.tag}."
 
 class Genre_Scores(models.Model):
-    profile_id = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    profile_id = models.OneToOneField(Profile, on_delete=models.CASCADE, related_name='profile')
     pinball = models.IntegerField(default=0)
     adventure = models.IntegerField(default=0)
     indie = models.IntegerField(default=0)

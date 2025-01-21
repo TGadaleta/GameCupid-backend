@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import (Profile, Profile_Match, Profile_BLock, Game, Platform, Genre_Scores, )
+from .models import (Profile, Profile_Match, Profile_Block, Game, Platform, Genre_Scores, )
 from django.contrib.auth.models import User
 
 class ProfileSerializer(serializers.ModelSerializer):
@@ -39,10 +39,10 @@ class Profile_MatchSerializer(serializers.ModelSerializer):
         model = Profile_Match
         fields = '__all__'
 
-class Profile_BLockSerializer(serializers.ModelSerializer):
+class Profile_BlockSerializer(serializers.ModelSerializer):
     profile = serializers.PrimaryKeyRelatedField(read_only=True)
     class Meta:
-        model = Profile_BLock
+        model = Profile_Block
         fields = '__all__'
 
 class GameSerializer(serializers.ModelSerializer):
