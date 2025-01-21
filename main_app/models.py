@@ -19,6 +19,7 @@ class Profile(models.Model):
         related_name='profile'
     )
     gender = models.CharField(
+        max_length=20,
         choices = (
             ('he/him','he/him'),
             ('she/her','she/her'),
@@ -26,8 +27,8 @@ class Profile(models.Model):
             ('other','other'),
         )
     )
-    city = models.CharField()
-    location = models.CharField()
+    city = models.CharField(max_length=50)
+    location = models.CharField(max_length=50)
 
     def __str__(self):
         return f"Profile for username {self.user.username}."
