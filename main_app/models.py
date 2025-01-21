@@ -98,3 +98,6 @@ class Genre_Scores(models.Model):
     tactical = models.IntegerField(default=0)
     hand_and_slash = models.IntegerField(default=0)
     quiz_trivia = models.IntegerField(default=0)
+
+    def __str__(self):
+        return f"{self.profile_id.user.username} genre scores."
