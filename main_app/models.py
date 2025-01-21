@@ -29,6 +29,9 @@ class Profile(models.Model):
     city = models.CharField()
     location = models.CharField()
 
+    def __str__(self):
+        return f"Profile for username {self.user.username}."
+
 class Profile_Match(models.Model):
     profile_id = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='match_initiated')
     match_profile_id =  models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='match_recieved')
@@ -60,6 +63,9 @@ class Platform(models.Model):
         default = PLATFORMS[0][0]
     )
     tag = models.CharField()
+
+    def __str__(self):
+        return f"On {self.brand}, user {self.profile_id.user.username} tag is {self.tag}."
 
 class Genre_Scores(models.Model):
     profile_id = models.ForeignKey(Profile, on_delete=models.CASCADE)
