@@ -18,5 +18,5 @@ urlpatterns = [
     path('genre-scores/', GenreScores.as_view(), name='genre-scores'),
     path('genre-scores/edit/', GenreScoresEdit.as_view(), name='genre-scores-edit'),
     path('delete-user/<int:user_id>/', UserDelete.as_view(), name='delete_user'),
-
+#todo: clean up paths and users path
 ]
