@@ -4,6 +4,7 @@ from django.db.models import Q
 
 # Create your models here.
 PLATFORMS = (
+    ('Blizzard', 'Blizzard'),
     ('Epic',"Epic"),
     ('Microsoft',"Microsoft"),
     ('Nintendo',"Nintendo"),
