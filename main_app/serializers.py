@@ -19,9 +19,10 @@ class UserSerializer(serializers.ModelSerializer):
       return user
 
 class ProfileSerializer(serializers.ModelSerializer):
-    username = serializers.CharField(source='user.username')
-    email = serializers.EmailField(source='user.email')
-    password = serializers.CharField(source='user.password', write_only=True)
+    username = serializers.CharField(source='user.username', read_only=True)
+    email = serializers.EmailField(source='user.email', read_only=True)
+    gender = serializers.CharField()
+    city = serializers.CharField()
 
     class Meta:
         model = Profile
