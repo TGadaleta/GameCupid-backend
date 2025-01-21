@@ -59,11 +59,11 @@ class Home(APIView):
     content = {'message': 'Welcome to the gamecupid api home route!'}
     return Response(content)
   
-class Profile(generics.ListAPIView):
+class ProfileView(generics.ListAPIView):
   serializer_class = ProfileSerializer
 
   def get_queryset(self):
-    user = self.request.user
+    user = self.request.user.id
     return Profile.objects.filter(user=user)
   
 class ProfileEdit(generics.RetrieveUpdateAPIView):
