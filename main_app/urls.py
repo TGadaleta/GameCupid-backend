@@ -1,5 +1,6 @@
 from django.urls import path
 from .views import Home
+from .views import delete_user
 
 urlpatterns = [
     path('', Home.as_view(), name='home'),
@@ -14,4 +15,6 @@ urlpatterns = [
     path('profile/blocks/', ProfileBlocsList.as_view(), name='profile-blocks'),
     path('genre-scores/', GenreScores.as_view(), name='genre-scores'),
     path('genre-scores/edit/', GenreScoresEdit.as_view(), name='genre-scores-edit'),
+    path('delete_user/<int:user_id>/', delete_user, name='delete_user'),
+
 ]
