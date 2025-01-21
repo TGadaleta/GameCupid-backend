@@ -28,3 +28,7 @@ class ProfileEdit(generics.RetrieveUpdateAPIView):
     if profile.user != self.request.user:
       raise PermissionDenied({'message': 'You do not have permission to edit this profile.'})
     serializer.save()
+
+class UserDelete(generics.DestroyAPIView):
+  def get_object(self):
+    return self.request.user
