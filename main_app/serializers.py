@@ -50,17 +50,23 @@ class ProfileSerializer(serializers.ModelSerializer):
         return instance
 
 class Profile_MatchSerializer(serializers.ModelSerializer):
-    profile = serializers.PrimaryKeyRelatedField(read_only=True)
+    profile_id = serializers.PrimaryKeyRelatedField(queryset=Profile.objects.all())
+    match_profile_id = serializers.PrimaryKeyRelatedField(queryset=Profile.objects.all())
 
     class Meta:
         model = Profile_Match
-        fields = '__all__'
+        fields = ['id', 'profile_id', 'match_profile_id', 'date_matched']
+
+    def create(self, validated_data):
+        return Profile_Match.objects.create(**validated_data)
 
 class Profile_BlockSerializer(serializers.ModelSerializer):
-    profile = serializers.PrimaryKeyRelatedField(read_only=True)
+    profile_id = serializers.PrimaryKeyRelatedField(queryset=Profile.objects.all())
+    blocked_profile_id = serializers.PrimaryKeyRelatedField(queryset=Profile.objects.all())
+
     class Meta:
         model = Profile_Block
-        fields = '__all__'
+        fields = ['id', 'profile_id', 'blocked_profile_id', 'date_blocked']
 
 class GameSerializer(serializers.ModelSerializer):
     class Meta:

@@ -29,7 +29,7 @@ class Profile(models.Model):
     city = models.CharField(max_length=50)
 
     def __str__(self):
-        return f"Profile for username {self.user.username}."
+        return f"Profile for username {self.user.username} id {self.id}."
 
 
 class Profile_Match(models.Model):
@@ -70,8 +70,7 @@ class Platform(models.Model):
     def __str__(self):
         return f"{self.profile_id.user.username} on {self.brand} is named {self.tag}."
 
-    def __str__(self):
-        return f"On {self.brand}, user {self.profile_id.user.username} tag is {self.tag}."
+
 
 class Genre_Scores(models.Model):
     profile_id = models.OneToOneField(Profile, on_delete=models.CASCADE, related_name='profile')
