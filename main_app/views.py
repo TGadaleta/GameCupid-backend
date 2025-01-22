@@ -1,5 +1,5 @@
 from rest_framework.views import APIView
-from .models import Profile, Game, Platform, Profile_Match, Profile_Block
+from .models import Profile, Game, Platform, Profile_Match, Profile_Block, User, Genre_Scores
 from rest_framework.response import Response
 from rest_framework import generics, status, permissions
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -59,12 +59,12 @@ class Home(APIView):
     content = {'message': 'Welcome to the gamecupid api home route!'}
     return Response(content)
   
-class Profile(generics.ListAPIView):
+class ProfileView(generics.ListAPIView):
   serializer_class = ProfileSerializer
 
   def get_queryset(self):
-    user = self.request.user
-    return Profile.objects.filter(user=user)
+    user = self.request.user.id
+    return Profile.objects.filter(user=user).first()
   
 class ProfileEdit(generics.RetrieveUpdateAPIView):
   serializer_class = ProfileSerializer
@@ -125,7 +125,7 @@ class ProfileBlocksList(generics.RetrieveUpdateAPIView):
 
   def get_queryset(self):
     profile_id = self.get_object()
-    return Profile_BLock.objects.filter(profile_id=profile_id)
+    return Profile_Block.objects.filter(profile_id=profile_id)
   
 class GenreScores(generics.ListAPIView):
   serializer_class = Genre_ScoresSerializer
@@ -139,4 +139,4 @@ class GenreScoresEdit(generics.RetrieveUpdateAPIView):
 
   def get_queryset(self):
     profile_id = self.get_object()
-    return GenreScores.objects.filter(profile_id=profile_id)
+    return Genre_Scores.objects.filter(profile_id=profile_id)

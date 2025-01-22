@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import Home, Profile, ProfileEdit, UserDelete, ProfileGamesList, ProfilePlatformsList, ProfileGamesEdit, ProfilePlatformsEdit, ProfileMatchesList, ProfileBlocksList, GenreScores, GenreScoresEdit, CreateUserView, LoginView, VerifyUserView
+from .views import Home, ProfileView, ProfileEdit, UserDelete, ProfileGamesList, ProfilePlatformsList, ProfileGamesEdit, ProfilePlatformsEdit, ProfileMatchesList, ProfileBlocksList, GenreScores, GenreScoresEdit, CreateUserView, LoginView, VerifyUserView
 
 urlpatterns = [
 
@@ -7,7 +7,7 @@ urlpatterns = [
     path('users/register/', CreateUserView.as_view(), name='register'),
     path('users/login/', LoginView.as_view(), name='login'),
     path('users/token/refresh/', VerifyUserView.as_view(), name='token_refresh'),
-    path('profile/', Profile.as_view(), name='profile'),
+    path('profile/', ProfileView.as_view(), name='profile'),
     path('profile/edit/', ProfileEdit.as_view(), name='profile-edit'),
     path('profile/games/', ProfileGamesList.as_view(), name='profile-games'),
     path('profile/platforms/', ProfilePlatformsList.as_view(), name='profile-platforms'),
@@ -18,5 +18,6 @@ urlpatterns = [
     path('genre-scores/', GenreScores.as_view(), name='genre-scores'),
     path('genre-scores/edit/', GenreScoresEdit.as_view(), name='genre-scores-edit'),
     path('delete-user/<int:user_id>/', UserDelete.as_view(), name='delete_user'),
-
+#todo: clean up paths and users path
 ]
+
