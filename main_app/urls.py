@@ -20,3 +20,4 @@ urlpatterns = [
     path('delete-user/<int:user_id>/', UserDelete.as_view(), name='delete_user'),
 #todo: clean up paths and users path
 ]
+
