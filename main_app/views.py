@@ -1,5 +1,5 @@
 from rest_framework.views import APIView
-from .models import Profile, Game, Platform, Profile_Match, Profile_Block
+from .models import Profile, Game, Platform, Profile_Match, Profile_Block, User, Genre_Scores
 from rest_framework.response import Response
 from rest_framework import generics, status, permissions
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -194,4 +194,4 @@ class GenreScoresEdit(generics.RetrieveUpdateAPIView):
 
   def get_queryset(self):
     profile_id = self.get_object()
-    return GenreScores.objects.filter(profile_id=profile_id)
+    return Genre_Scores.objects.filter(profile_id=profile_id)

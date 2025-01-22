@@ -33,6 +33,7 @@ class Profile(models.Model):
     def __str__(self):
         return f"Profile for username {self.user.username} id {self.id}."
 
+
 class Profile_Match(models.Model):
     profile_id = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='match_initiated')
     match_profile_id =  models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='match_recieved')

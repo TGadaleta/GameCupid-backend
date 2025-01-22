@@ -23,3 +23,4 @@ urlpatterns = [
     path('genre-scores/edit/', GenreScoresEdit.as_view(), name='genre-scores-edit'), #retrieves and edits genre scores
     
 ]
+

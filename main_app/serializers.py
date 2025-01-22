@@ -1,6 +1,5 @@
 from rest_framework import serializers
-from .models import (Profile, Profile_Match, Profile_Block, Game, Platform, Genre_Scores, )
-from django.contrib.auth.models import User
+from .models import (Profile, Profile_Match, Profile_Block, Game, Platform, Genre_Scores, User)
 
 
 class UserSerializer(serializers.ModelSerializer):
