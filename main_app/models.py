@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models import Q
+from django.contrib.postgres.fields import ArrayField
 
 # Create your models here.
 PLATFORMS = (
@@ -10,6 +10,7 @@ PLATFORMS = (
     ('Nintendo',"Nintendo"),
     ('Sony',"Sony"),
     ('Steam',"Steam"),
+    ('Ubisoft',"Ubisoft"),
 )
 
 class Profile(models.Model):
@@ -51,6 +52,7 @@ class Profile_Block(models.Model):
 class Game(models.Model):
     profile_id = models.ForeignKey(Profile, on_delete=models.CASCADE)
     title = models.CharField()
+    genre = models.JSONField(default=list)
     fav_rank = models.IntegerField()
 
     class Meta:
