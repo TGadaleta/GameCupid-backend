@@ -72,12 +72,12 @@ class Profile_BlockSerializer(serializers.ModelSerializer):
 class GameSerializer(serializers.ModelSerializer):
     class Meta:
         model = Game
-        fields = ['id', 'profile_id', 'title', 'genre', 'fav_rank']
+        fields = ['id', 'title', 'genre', 'fav_rank']
 
 class PlatformSerializer(serializers.ModelSerializer):
     class Meta:
         model = Platform
-        fields = ['id', 'profile_id', 'brand', 'tag']
+        fields = ['id', 'brand', 'tag']
 
 class Genre_ScoresSerializer(serializers.ModelSerializer):
     class Meta:
