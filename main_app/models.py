@@ -52,7 +52,7 @@ class Profile_Block(models.Model):
 
 class Game(models.Model):
     profile_id = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    title = models.CharField()
+    title = models.CharField(max_length=100)
     genre = models.JSONField(default=list)
     fav_rank = models.IntegerField()
 
@@ -66,9 +66,10 @@ class Platform(models.Model):
     profile_id = models.ForeignKey(Profile, on_delete=models.CASCADE)
     brand = models.CharField(
         choices = PLATFORMS,
-        default = PLATFORMS[0][0]
+        default = PLATFORMS[0][0],
+        max_length=20
     )
-    tag = models.CharField()
+    tag = models.CharField(max_length=50)
     
     def __str__(self):
         return f"{self.profile_id.user.username} on {self.brand} is named {self.tag}."
