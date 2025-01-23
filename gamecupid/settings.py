@@ -14,6 +14,7 @@ from pathlib import Path
 import environ
 import dj_database_url
 import django_heroku
+from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,8 +22,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # env = environ.Env()
 # environ.Env.read_env()
 
-# DATABASE_URL=env('DATABASE_URL')
-# SECRET_KEY=env('SECRET_KEY')
+DATABASE_URL=env('DATABASE_URL')
+SECRET_KEY=env('SECRET_KEY')
+TWITCH_CLIENT_ID=env("TWITCH_CLIENT_ID")
+TWITCH_CLIENT_SECRET=env("TWITCH_CLIENT_SECRET")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -34,6 +37,7 @@ SECRET_KEY = 'django-insecure-k-oppaby96k!0$zex5064x+nq8cti_&2r%c)9)(sgo3bcq75$&
 DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com']
+
 
 # CORS settings
 CORS_ALLOW_ALL_ORIGINS = True
@@ -200,5 +204,9 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+
 
 django_heroku.settings(locals())
