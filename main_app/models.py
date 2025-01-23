@@ -22,11 +22,13 @@ class Profile(models.Model):
     gender = models.CharField(
         max_length=20,
         choices = (
+            ('default','default'),
             ('he/him','he/him'),
             ('she/her','she/her'),
             ('they/them','they/them'),
             ('other','other'),
-        )
+        ),
+        default='default'
     )
     city = models.CharField(max_length=50)
 
