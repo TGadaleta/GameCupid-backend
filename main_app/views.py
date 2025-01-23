@@ -63,8 +63,7 @@ class ProfileList(generics.ListAPIView): #get all profiles
   serializer_class = ProfileSerializer
 
   def get_queryset(self):
-    user = self.request.user
-    return Profile.objects.filter(user=user)
+    return Profile.objects.all()
   
 class ProfileDetailView(APIView): #get one profile
     def get(self, request, user_id):
