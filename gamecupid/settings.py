@@ -19,8 +19,8 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-env = environ.Env()
-environ.Env.read_env()
+# env = environ.Env()
+# environ.Env.read_env()
 
 DATABASE_URL=env('DATABASE_URL')
 SECRET_KEY=env('SECRET_KEY')
@@ -40,9 +40,10 @@ ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com']
 
 
 # CORS settings
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",  # Adjust the port if your frontend runs on a different one
-]
+CORS_ALLOW_ALL_ORIGINS = True
+# [
+#     "http://localhost:3000",  # Adjust the port if your frontend runs on a different one
+# ]
 
 # Application definition
 
@@ -139,9 +140,28 @@ WSGI_APPLICATION = 'gamecupid.wsgi.application'
 #     }
 # }
 
+# DATABASES = {
+#     'default': 
+#         dj_database_url.config('DATABASE_URL')
+# }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'gamecupid',
+#         'USER': 'tonygadaleta',
+#         'PASSWORD': 'password',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#         'OPTIONS': {
+#             'sslmode': 'disable',  # Explicitly disable SSL
+#         },
+#     }
+# }
 DATABASES = {
-    'default': 
-        dj_database_url.config('DATABASE_URL')
+    'default': dj_database_url.config(
+        default='postgres://tonygadaleta:password@localhost:5432/gamecupid',
+        ssl_require=False
+    )
 }
 
 # Password validation

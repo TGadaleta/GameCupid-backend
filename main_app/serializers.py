@@ -7,7 +7,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'password')
+        fields = ['id', 'username', 'email', 'password']
     
     def create(self, validated_data):
       user = User.objects.create_user(
@@ -71,12 +71,12 @@ class Profile_BlockSerializer(serializers.ModelSerializer):
 class GameSerializer(serializers.ModelSerializer):
     class Meta:
         model = Game
-        fields = '__all__'
+        fields = ['id', 'title', 'genre', 'fav_rank']
 
 class PlatformSerializer(serializers.ModelSerializer):
     class Meta:
         model = Platform
-        fields = '__all__'
+        fields = ['id', 'brand', 'tag']
 
 class Genre_ScoresSerializer(serializers.ModelSerializer):
     class Meta:
