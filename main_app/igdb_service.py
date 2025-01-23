@@ -27,13 +27,25 @@ def search_games(query):
         "Accept": "application/json"
     }
 
-    data = f"""fields name; search "{query}"; """
+    data = f"""fields name, genres; search "{query}"; limit 10;"""
 
     response = requests.post(endpoint, headers=headers, data=data)
     if response.status_code == 200:
         games = response.json()
-        game_names = [game['name'] for game in games]
-        return game_names
+        game_names_and_genres = []
+        for game in games:
+            genre_names = []
+            genre_ids = game.get('genres', [])
+            if genre_ids:
+                genre_endpoint = "https://api.igdb.com/v4/genres"
+                genre_data = f"fields name; where id = ({','.join(map(str, genre_ids))});"
+                genre_response = requests.post(genre_endpoint, headers=headers, data=genre_data)
+                if genre_response.status_code == 200:
+                    genres = genre_response.json()
+                    genre_names = [genre['name'] for genre in genres]
+            game_names_and_genres.append((game['name'], genre_names))
+            print(f"Game: {game['name']}, Genres: {genre_names}")
+        return game_names_and_genres
     else:
         import logging
         logger = logging.getLogger(__name__)

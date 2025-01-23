@@ -19,8 +19,8 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# env = environ.Env()
-# environ.Env.read_env()
+env = environ.Env()
+environ.Env.read_env()
 
 DATABASE_URL=env('DATABASE_URL')
 SECRET_KEY=env('SECRET_KEY')
@@ -140,10 +140,10 @@ WSGI_APPLICATION = 'gamecupid.wsgi.application'
 #     }
 # }
 
-# DATABASES = {
-#     'default': 
-#         dj_database_url.config('DATABASE_URL')
-# }
+DATABASES = {
+    'default': 
+        dj_database_url.config('DATABASE_URL')
+}
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
@@ -157,12 +157,12 @@ WSGI_APPLICATION = 'gamecupid.wsgi.application'
 #         },
 #     }
 # }
-DATABASES = {
-    'default': dj_database_url.config(
-        default='postgres://tonygadaleta:password@localhost:5432/gamecupid',
-        ssl_require=False
-    )
-}
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default='postgres://tonygadaleta:password@localhost:5432/gamecupid',
+#         ssl_require=False
+#     )
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
