@@ -7,6 +7,7 @@ from django.contrib.auth import authenticate
 from rest_framework.exceptions import PermissionDenied
 from django.contrib.auth.models import User
 from .serializers import UserSerializer, PlatformSerializer, Profile_BlockSerializer, Profile_MatchSerializer, GameSerializer, Genre_ScoresSerializer, ProfileSerializer
+from .igdb_service import search_games
 
 
 class CreateUserView(generics.CreateAPIView):
@@ -96,6 +97,14 @@ class UserDelete(generics.DestroyAPIView):
   def get_object(self):
     return self.request.user
   
+class GameSearchView(APIView):
+   def post(self, request):
+      query = request.data.get('query')
+      if not query:
+          return Response({"error": "No query provided"}, status=status.HTTP_400_BAD_REQUEST)
+      games = search_games(query)
+      return Response(games, status=status.HTTP_200_OK)
+  
 class ProfileGamesCreate(generics.CreateAPIView):
   serializer_class = GameSerializer
   permission_classes = [permissions.IsAuthenticated]
@@ -143,7 +152,6 @@ class ProfilePlatformsListCreate(generics.ListCreateAPIView): # RetrieveAPIView 
   
   def get_queryset(self):
     profile = Profile.objects.get(user_id=self.request.user.id)
-    print(profile.id)
     return Platform.objects.filter(profile_id=profile.id)
 
   def perform_create(self, serializer):

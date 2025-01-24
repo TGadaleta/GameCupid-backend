@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import Home, ProfileList, ProfileEdit, UserDelete, ProfileGamesList, ProfilePlatformsListCreate, ProfileGamesEdit, ProfilePlatformsEdit, ProfileMatchDetailView, ProfileBlockDetailView, GenreScoresEdit, CreateUserView, LoginView, VerifyUserView, ProfileDetailView, ProfileGamesCreate, ProfileMatchCreateView, ProfileBlockCreateView, PlatformChoicesView
+from .views import Home, ProfileList, ProfileEdit, UserDelete, ProfileGamesList, ProfilePlatformsListCreate, ProfileGamesEdit, ProfilePlatformsEdit, ProfileMatchDetailView, ProfileBlockDetailView, GenreScoresEdit, CreateUserView, LoginView, VerifyUserView, ProfileDetailView, ProfileGamesCreate, ProfileMatchCreateView, ProfileBlockCreateView, PlatformChoicesView, GameSearchView
 
 urlpatterns = [
 
@@ -12,6 +12,7 @@ urlpatterns = [
     path('profile/<int:user_id>/', ProfileDetailView.as_view(), name='profile'), #displays profile
     path('profile/<int:user_id>/edit/', ProfileEdit.as_view(), name='profile-edit'), #edits profile
     path('profile/games/', ProfileGamesList.as_view(), name='user-games'), #lists all games on profile
+    path('games/search/', GameSearchView.as_view(), name='game-search'), #searches for games based on query
     path('profile/games/add/', ProfileGamesCreate.as_view(), name='profile-games-add'), #adds games to profile
     path('profile/games/<int:pk>/edit/', ProfileGamesEdit.as_view(), name='profile-games-edit'), #edits and deletes games on profile
     path('profile/platforms/choices/', PlatformChoicesView.as_view(), name='platform-choices'), #lists all platforms choices
