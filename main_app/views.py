@@ -8,6 +8,7 @@ from rest_framework.exceptions import PermissionDenied
 from django.contrib.auth.models import User
 from .serializers import UserSerializer, PlatformSerializer, Profile_BlockSerializer, Profile_MatchSerializer, GameSerializer, Genre_ScoresSerializer, ProfileSerializer
 from .igdb_service import search_games
+from .match_service import match_profiles
 
 
 class CreateUserView(generics.CreateAPIView):
@@ -183,6 +184,12 @@ class ProfilePlatformsEdit(generics.RetrieveUpdateDestroyAPIView):
     if instance.profile_id != self.request.user.profile:
       raise PermissionDenied("You do not have permission to delete this platform.")
     instance.delete()
+
+class MatchSearchView(APIView):
+   def get(self, request):
+      matches = match_profiles(request.user.profile.id)
+      serializer = ProfileSerializer(matches, many=True)
+      return Response(serializer.data, status=status.HTTP_200_OK)
 
 class ProfileMatchCreateView(generics.CreateAPIView):
     queryset = Profile_Match.objects.all()
