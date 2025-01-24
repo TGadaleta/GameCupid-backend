@@ -134,7 +134,7 @@ class ProfileGamesEdit(generics.RetrieveUpdateDestroyAPIView):
 
 class PlatformChoicesView(APIView):
    def get(self, request):
-      choices = [{'value': choice[0], 'label': choice[1]} for choice in Platform.PLATFORMS]
+      choices = [{'value': choice[0], 'label': choice[1]} for choice in Platform._meta.get_field('brand').choices]
       return Response(choices)
 
 class ProfilePlatformsListCreate(generics.ListCreateAPIView): # RetrieveAPIView it was this but now its ListAPIView
