@@ -157,12 +157,21 @@ class ProfilePlatformsListCreate(generics.ListCreateAPIView): # RetrieveAPIView 
   def perform_create(self, serializer):
     serializer.save(profile_id=self.request.user.profile)
   
-class ProfilePlatformsEdit(generics.RetrieveUpdateAPIView):
+class ProfilePlatformsEdit(generics.RetrieveUpdateDestroyAPIView):
   serializer_class = PlatformSerializer
   permission_classes = [permissions.IsAuthenticated]
+  lookup_field = 'id'
 
   def get_queryset(self):
-    return Platform.objects.filter(profile_id=self.request.user.profile)
+    # Get the profile for the authenticated user
+    profile = Profile.objects.get(user_id=self.request.user.id)
+    print("Profile:", profile)
+        
+    # Return all platforms for the user's profile
+    platforms = Platform.objects.filter(profile_id=profile.id)
+    print("Platforms in queryset:", platforms)
+        
+    return platforms
   
   def perform_update(self, serializer):
     platform = self.get_object()
