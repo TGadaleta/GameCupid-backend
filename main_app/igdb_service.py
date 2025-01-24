@@ -27,8 +27,7 @@ def search_games(query):
         "Accept": "application/json"
     }
 
-    data = f"""fields name, genres; search "{query}"; limit 10;"""
-
+    data = f"""fields name, genres; search "{query}"; limit 20;"""
     response = requests.post(endpoint, headers=headers, data=data)
     if response.status_code == 200:
         games = response.json()
@@ -44,7 +43,6 @@ def search_games(query):
                     genres = genre_response.json()
                     genre_names = [genre['name'] for genre in genres]
             game_names_and_genres.append((game['name'], genre_names))
-            print(f"Game: {game['name']}, Genres: {genre_names}")
         return game_names_and_genres
     else:
         import logging
