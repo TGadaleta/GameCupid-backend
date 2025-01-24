@@ -132,6 +132,11 @@ class ProfileGamesEdit(generics.RetrieveUpdateDestroyAPIView):
             raise PermissionDenied("You do not have permission to delete this game.")
         instance.delete()
 
+class PlatformChoicesView(APIView):
+   def get(self, request):
+      choices = [{'value': choice[0], 'label': choice[1]} for choice in Platform.PLATFORMS]
+      return Response(choices)
+
 class ProfilePlatformsListCreate(generics.ListCreateAPIView): # RetrieveAPIView it was this but now its ListAPIView
   serializer_class = PlatformSerializer
   permission_classes = [permissions.IsAuthenticated]

@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import Home, ProfileList, ProfileEdit, UserDelete, ProfileGamesList, ProfilePlatformsListCreate, ProfileGamesEdit, ProfilePlatformsEdit, ProfileMatchDetailView, ProfileBlockDetailView, GenreScoresEdit, CreateUserView, LoginView, VerifyUserView, ProfileDetailView, ProfileGamesCreate, ProfileMatchCreateView, ProfileBlockCreateView
+from .views import Home, ProfileList, ProfileEdit, UserDelete, ProfileGamesList, ProfilePlatformsListCreate, ProfileGamesEdit, ProfilePlatformsEdit, ProfileMatchDetailView, ProfileBlockDetailView, GenreScoresEdit, CreateUserView, LoginView, VerifyUserView, ProfileDetailView, ProfileGamesCreate, ProfileMatchCreateView, ProfileBlockCreateView, PlatformChoicesView
 
 urlpatterns = [
 
@@ -14,6 +14,7 @@ urlpatterns = [
     path('profile/games/', ProfileGamesList.as_view(), name='user-games'), #lists all games on profile
     path('profile/games/add/', ProfileGamesCreate.as_view(), name='profile-games-add'), #adds games to profile
     path('profile/games/<int:pk>/edit/', ProfileGamesEdit.as_view(), name='profile-games-edit'), #edits and deletes games on profile
+    path('profile/platforms/choices', PlatformChoicesView.as_view(), name='platform-choices'), #lists all platforms choices
     path('profile/platforms/<int:pk>/', ProfilePlatformsListCreate.as_view(), name='profile-platforms'), #lists and creates platforms on profile
     path('profile/platforms/<int:pk>/edit/', ProfilePlatformsEdit.as_view(), name='profile-platforms-edit'), #edits and deletes platforms on profile
     path('profile/match/add/', ProfileMatchCreateView.as_view(), name='profile-match-add'), #creates a match
