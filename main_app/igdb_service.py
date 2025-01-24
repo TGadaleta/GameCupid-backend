@@ -43,7 +43,11 @@ def search_games(query):
                     genres = genre_response.json()
                     genre_names = [genre['name'] for genre in genres]
             game_names_and_genres.append((game['name'], genre_names))
-        return game_names_and_genres
+            games_json = [
+                {"title": game_name, "genre": genre_names}
+                for game_name, genre_names in game_names_and_genres
+            ]
+        return games_json
     else:
         import logging
         logger = logging.getLogger(__name__)
