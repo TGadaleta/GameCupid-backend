@@ -31,10 +31,10 @@ class Profile(models.Model):
         default='default'
     )
     city = models.CharField(max_length=50)
+    profile_likes = models.JSONField(default=list, blank=True, null=True)
 
     def __str__(self):
         return f"Profile for username {self.user.username} id {self.id}."
-
 
 class Profile_Match(models.Model):
     profile_id = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='match_initiated')
