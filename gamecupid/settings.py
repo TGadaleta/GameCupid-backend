@@ -41,9 +41,9 @@ ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com']
 
 # CORS settings
 CORS_ALLOW_ALL_ORIGINS = True
-# [
-#     "http://localhost:3000",  # Adjust the port if your frontend runs on a different one
-# ]
+[
+    "http://localhost:5473",  # Adjust the port if your frontend runs on a different one
+]
 
 # Application definition
 
