@@ -23,10 +23,11 @@ class ProfileSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(source='user.email', read_only=True)
     gender = serializers.CharField()
     city = serializers.CharField()
+    likes = serializers.JSONField(source='profile_likes')
 
     class Meta:
         model = Profile
-        fields = ['id', 'username', 'email', 'gender', 'city']
+        fields = ['id', 'username', 'email', 'gender', 'city', 'likes']
     
     def create(self, validated_data):
         user_data = validated_data.pop('user')

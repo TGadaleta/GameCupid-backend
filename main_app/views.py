@@ -223,3 +223,10 @@ class GenreScoresEdit(generics.RetrieveUpdateAPIView):
   def get_queryset(self):
     profile_id = self.get_object()
     return Genre_Scores.objects.filter(profile_id=profile_id)
+
+class ProfileViewOfRecommendedUsers(APIView):
+    def get(self, request):
+        user_id = request.user.id
+        matching_profiles = match_profiles(user_id)
+        serializer = ProfileSerializer(matching_profiles, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
