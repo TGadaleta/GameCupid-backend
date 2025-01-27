@@ -14,6 +14,7 @@ from pathlib import Path
 import environ
 import dj_database_url
 import django_heroku
+from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,6 +24,8 @@ environ.Env.read_env()
 
 DATABASE_URL=env('DATABASE_URL')
 SECRET_KEY=env('SECRET_KEY')
+TWITCH_CLIENT_ID=env("TWITCH_CLIENT_ID")
+TWITCH_CLIENT_SECRET=env("TWITCH_CLIENT_SECRET")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -35,9 +38,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com']
 
+
 # CORS settings
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",  # Adjust the port if your frontend runs on a different one
+CORS_ALLOW_ALL_ORIGINS = True
+[
+    "http://localhost:5173",  # Adjust the port if your frontend runs on a different one
 ]
 
 # Application definition
@@ -139,6 +144,25 @@ DATABASES = {
     'default': 
         dj_database_url.config('DATABASE_URL')
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'gamecupid',
+#         'USER': 'tonygadaleta',
+#         'PASSWORD': 'password',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#         'OPTIONS': {
+#             'sslmode': 'disable',  # Explicitly disable SSL
+#         },
+#     }
+# }
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default='postgres://tonygadaleta:password@localhost:5432/gamecupid',
+#         ssl_require=False
+#     )
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -180,5 +204,9 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+
 
 django_heroku.settings(locals())

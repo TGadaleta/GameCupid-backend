@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.postgres.fields import ArrayField
 
 # Create your models here.
 PLATFORMS = (
@@ -9,6 +10,7 @@ PLATFORMS = (
     ('Nintendo',"Nintendo"),
     ('Sony',"Sony"),
     ('Steam',"Steam"),
+    ('Ubisoft',"Ubisoft"),
 )
 
 class Profile(models.Model):
@@ -20,17 +22,19 @@ class Profile(models.Model):
     gender = models.CharField(
         max_length=20,
         choices = (
+            ('default','default'),
             ('he/him','he/him'),
             ('she/her','she/her'),
             ('they/them','they/them'),
             ('other','other'),
-        )
+        ),
+        default='default'
     )
     city = models.CharField(max_length=50)
+    profile_likes = models.JSONField(default=list, blank=True, null=True)
 
     def __str__(self):
-        return f"Profile for username {self.user.username}."
-
+        return f"Profile for username {self.user.username} id {self.id}."
 
 class Profile_Match(models.Model):
     profile_id = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='match_initiated')
@@ -50,7 +54,8 @@ class Profile_Block(models.Model):
 
 class Game(models.Model):
     profile_id = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    title = models.CharField()
+    title = models.CharField(max_length=100)
+    genre = models.JSONField(default=list)
     fav_rank = models.IntegerField()
 
     class Meta:
@@ -63,15 +68,15 @@ class Platform(models.Model):
     profile_id = models.ForeignKey(Profile, on_delete=models.CASCADE)
     brand = models.CharField(
         choices = PLATFORMS,
-        default = PLATFORMS[0][0]
+        default = PLATFORMS[0][0],
+        max_length=20
     )
-    tag = models.CharField()
+    tag = models.CharField(max_length=50)
     
     def __str__(self):
         return f"{self.profile_id.user.username} on {self.brand} is named {self.tag}."
 
-    def __str__(self):
-        return f"On {self.brand}, user {self.profile_id.user.username} tag is {self.tag}."
+
 
 class Genre_Scores(models.Model):
     profile_id = models.OneToOneField(Profile, on_delete=models.CASCADE, related_name='profile')

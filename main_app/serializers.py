@@ -7,7 +7,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'password')
+        fields = ['id', 'username', 'email', 'password']
     
     def create(self, validated_data):
       user = User.objects.create_user(
@@ -19,13 +19,15 @@ class UserSerializer(serializers.ModelSerializer):
       return user
 
 class ProfileSerializer(serializers.ModelSerializer):
-    username = serializers.CharField(source='user.username')
-    email = serializers.EmailField(source='user.email')
-    password = serializers.CharField(source='user.password', write_only=True)
+    username = serializers.CharField(source='user.username', read_only=True)
+    email = serializers.EmailField(source='user.email', read_only=True)
+    gender = serializers.CharField()
+    city = serializers.CharField()
+    likes = serializers.JSONField(source='profile_likes')
 
     class Meta:
         model = Profile
-        fields = ['id', 'username', 'email', 'gender', 'city']
+        fields = ['id', 'username', 'email', 'gender', 'city', 'likes']
     
     def create(self, validated_data):
         user_data = validated_data.pop('user')
@@ -49,27 +51,33 @@ class ProfileSerializer(serializers.ModelSerializer):
         return instance
 
 class Profile_MatchSerializer(serializers.ModelSerializer):
-    profile = serializers.PrimaryKeyRelatedField(read_only=True)
+    profile_id = serializers.PrimaryKeyRelatedField(queryset=Profile.objects.all())
+    match_profile_id = serializers.PrimaryKeyRelatedField(queryset=Profile.objects.all())
 
     class Meta:
         model = Profile_Match
-        fields = '__all__'
+        fields = ['id', 'profile_id', 'match_profile_id', 'date_matched']
+
+    def create(self, validated_data):
+        return Profile_Match.objects.create(**validated_data)
 
 class Profile_BlockSerializer(serializers.ModelSerializer):
-    profile = serializers.PrimaryKeyRelatedField(read_only=True)
+    profile_id = serializers.PrimaryKeyRelatedField(queryset=Profile.objects.all())
+    blocked_profile_id = serializers.PrimaryKeyRelatedField(queryset=Profile.objects.all())
+
     class Meta:
         model = Profile_Block
-        fields = '__all__'
+        fields = ['id', 'profile_id', 'blocked_profile_id', 'date_blocked']
 
 class GameSerializer(serializers.ModelSerializer):
     class Meta:
         model = Game
-        fields = '__all__'
+        fields = ['id', 'title', 'genre', 'fav_rank']
 
 class PlatformSerializer(serializers.ModelSerializer):
     class Meta:
         model = Platform
-        fields = '__all__'
+        fields = ['id', 'brand', 'tag']
 
 class Genre_ScoresSerializer(serializers.ModelSerializer):
     class Meta:
