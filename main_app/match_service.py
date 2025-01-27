@@ -1,4 +1,5 @@
 from .models import Profile, Game
+from .models import Profile_Block
 
 def match_profiles(user_id):
     
@@ -10,7 +11,9 @@ def match_profiles(user_id):
 
     matching_profiles = []
 
-    for profile in Profile.objects.exclude(id=user_id):
+    blocked_profiles = Profile_Block.objects.filter(profile_id=current_profile.id).values_list('blocked_profile_id', flat=True)
+
+    for profile in Profile.objects.exclude(id=user_id).exclude(id__in=blocked_profiles):
         profile_id = profile.id
         profile_games = Game.objects.all().filter(profile_id=profile_id)
         profile_genres = set()
