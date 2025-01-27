@@ -1,5 +1,5 @@
 # GameCupid
-![GameCupidWelcomePage](assets/WelcomePage.png)
+![GameCupidWelcomePage](assets/WelcomePage.jpeg)
 
 **Use your love of video games as a way to meet new people.**
 
