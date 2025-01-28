@@ -5,12 +5,18 @@ from django.contrib.postgres.fields import ArrayField
 # Create your models here.
 PLATFORMS = (
     ('Blizzard', 'Blizzard'),
-    ('Epic',"Epic"),
-    ('Microsoft',"Microsoft"),
-    ('Nintendo',"Nintendo"),
-    ('Sony',"Sony"),
-    ('Steam',"Steam"),
-    ('Ubisoft',"Ubisoft"),
+    ('Epic', 'Epic'),
+    ('GOG', 'GOG'),
+    ('Microsoft', 'Microsoft'),
+    ('Nintendo', 'Nintendo'),
+    ('Origin', 'Origin'),
+    ('PlayStation', 'PlayStation'),
+    ('Rockstar', 'Rockstar'),
+    ('Riot', 'Riot'),
+    ('Sony', 'Sony'),
+    ('Steam', 'Steam'),
+    ('Ubisoft', 'Ubisoft'),
+    ('Xbox', 'Xbox'),
 )
 
 class Profile(models.Model):
@@ -31,7 +37,6 @@ class Profile(models.Model):
         default='default'
     )
     city = models.CharField(max_length=50)
-    profile_likes = models.JSONField(default=list, blank=True, null=True)
 
     def __str__(self):
         return f"Profile for username {self.user.username} id {self.id}."
@@ -39,7 +44,7 @@ class Profile(models.Model):
 class Profile_Match(models.Model):
     profile_id = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='match_initiated')
     match_profile_id =  models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='match_recieved')
-    date_matched = models.DateField()
+    date_matched = models.DateTimeField()
         
     def __str__(self):
         return f"{self.profile_id.user} matched {self.match_profile_id.user} on {self.date_matched}."
@@ -47,7 +52,7 @@ class Profile_Match(models.Model):
 class Profile_Block(models.Model):
     profile_id = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='block_initiated')
     blocked_profile_id = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='block_recieved')
-    date_blocked = models.DateField()
+    date_blocked = models.DateTimeField()
 
     def __str__(self):
         return f"{self.profile_id.user} blocked {self.blocked_profile_id.user} on {self.date_blocked}."
@@ -56,7 +61,7 @@ class Game(models.Model):
     profile_id = models.ForeignKey(Profile, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     genre = models.JSONField(default=list)
-    fav_rank = models.IntegerField()
+    fav_rank = models.PositiveIntegerField()
 
     class Meta:
         ordering = ['fav_rank']
@@ -75,8 +80,6 @@ class Platform(models.Model):
     
     def __str__(self):
         return f"{self.profile_id.user.username} on {self.brand} is named {self.tag}."
-
-
 
 class Genre_Scores(models.Model):
     profile_id = models.OneToOneField(Profile, on_delete=models.CASCADE, related_name='profile')

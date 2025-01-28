@@ -18,38 +18,6 @@ class UserSerializer(serializers.ModelSerializer):
       
       return user
 
-class ProfileSerializer(serializers.ModelSerializer):
-    username = serializers.CharField(source='user.username', read_only=True)
-    email = serializers.EmailField(source='user.email', read_only=True)
-    gender = serializers.CharField()
-    city = serializers.CharField()
-    likes = serializers.JSONField(source='profile_likes')
-
-    class Meta:
-        model = Profile
-        fields = ['id', 'username', 'email', 'gender', 'city', 'likes']
-    
-    def create(self, validated_data):
-        user_data = validated_data.pop('user')
-        user = User.objects.create_user(**user_data)
-        profile = Profile.objects.create(user=user, **validated_data)
-        return profile
-    
-    def update(self, instance, validated_data):
-        # Handle nested user fields
-        user_data = validated_data.pop('user', {})
-        user = instance.user
-        for attr, value in user_data.items():
-            setattr(user, attr, value)
-        user.save()
-
-        # Handle Profile fields
-        for attr, value in validated_data.items():
-            setattr(instance, attr, value)
-        instance.save()
-
-        return instance
-
 class Profile_MatchSerializer(serializers.ModelSerializer):
     profile_id = serializers.PrimaryKeyRelatedField(queryset=Profile.objects.all())
     match_profile_id = serializers.PrimaryKeyRelatedField(queryset=Profile.objects.all())
@@ -77,9 +45,44 @@ class GameSerializer(serializers.ModelSerializer):
 class PlatformSerializer(serializers.ModelSerializer):
     class Meta:
         model = Platform
-        fields = ['id', 'brand', 'tag']
+        fields = ['brand', 'tag']
 
 class Genre_ScoresSerializer(serializers.ModelSerializer):
     class Meta:
         model = Genre_Scores
         fields = '__all__'
+
+class ProfileSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(source='user.username', read_only=True)
+    email = serializers.EmailField(source='user.email', read_only=True)
+    Games = GameSerializer(many=True, read_only=True)
+    platforms = PlatformSerializer(many=True, read_only=True)
+    profile_match = Profile_MatchSerializer(many=True, read_only=True)
+    profile_block = Profile_BlockSerializer(many=True, read_only=True)
+    genre_Scores = Genre_ScoresSerializer(many=True, read_only=True)
+    
+
+    class Meta:
+        model = Profile
+        fields = ['id', 'username', 'email', 'gender', 'city', ]
+    
+    def create(self, validated_data):
+        user_data = validated_data.pop('user')
+        user = User.objects.create_user(**user_data)
+        profile = Profile.objects.create(user=user, **validated_data)
+        return profile
+    
+    def update(self, instance, validated_data):
+        # Handle nested user fields
+        user_data = validated_data.pop('user', {})
+        user = instance.user
+        for attr, value in user_data.items():
+            setattr(user, attr, value)
+        user.save()
+
+        # Handle Profile fields
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        instance.save()
+
+        return instance
