@@ -22,8 +22,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 env = environ.Env()
 environ.Env.read_env()
 
-DATABASE_URL=env('DATABASE_URL')
-SECRET_KEY=env('SECRET_KEY')
+# Secret key and database URL needed for Heroku deployment
+# DATABASE_URL=env('DATABASE_URL')
+# SECRET_KEY=env('SECRET_KEY')
 TWITCH_CLIENT_ID=env("TWITCH_CLIENT_ID")
 TWITCH_CLIENT_SECRET=env("TWITCH_CLIENT_SECRET")
 
@@ -122,47 +123,20 @@ WSGI_APPLICATION = 'gamecupid.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+
+# Remote database on Heroku
 # DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
+#     'default': 
+#         dj_database_url.config('DATABASE_URL')
 # }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'gamecupid',
-#         # 'HOST': 'localhost',  <-- (optional) some computers might need this line
-#         # 'USER': 'cat_admin', <-- (optional) postgres user name, if you have to sign into an account to open psql, you will want to add that user name here.
-#         # 'PASSWORD': 'password', <-- (optional) postgres user password, if you have to sign into an account to open psql, you will want to add that user password here.
-#         # 'PORT': 3000 <-- if you desire to use a port other than 8000, you can change that here to any valid port id, some number between 1 and 65535 that isn't in use by some other process on your machine. The reason for this port number range is because of how TCP/IP works, a TCP/IP protocol network(the most widely used protocol used on the web) allocated 16 bits for port numbers. This means that number must be greater than 0 and less than 2^15 -1. 
-#     }
-# }
-
+# Local database
 DATABASES = {
-    'default': 
-        dj_database_url.config('DATABASE_URL')
+    'default': dj_database_url.config(
+        default='postgres://tonygadaleta:password@localhost:5432/gamecupid',
+        ssl_require=False
+    )
 }
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'gamecupid',
-#         'USER': 'tonygadaleta',
-#         'PASSWORD': 'password',
-#         'HOST': 'localhost',
-#         'PORT': '5432',
-#         'OPTIONS': {
-#             'sslmode': 'disable',  # Explicitly disable SSL
-#         },
-#     }
-# }
-# DATABASES = {
-#     'default': dj_database_url.config(
-#         default='postgres://tonygadaleta:password@localhost:5432/gamecupid',
-#         ssl_require=False
-#     )
-# }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators

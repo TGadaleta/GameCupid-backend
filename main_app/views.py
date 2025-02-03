@@ -93,7 +93,7 @@ class ProfileEdit(generics.RetrieveUpdateAPIView):
       return profile
 
 class UserDelete(generics.DestroyAPIView):
-  serializer_class = ProfileSerializer
+  serializer_class = UserSerializer
 
   def get_object(self):
     return self.request.user

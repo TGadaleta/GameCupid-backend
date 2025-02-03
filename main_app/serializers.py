@@ -61,7 +61,6 @@ class ProfileSerializer(serializers.ModelSerializer):
     profile_block = Profile_BlockSerializer(many=True, read_only=True)
     genre_Scores = Genre_ScoresSerializer(many=True, read_only=True)
     
-
     class Meta:
         model = Profile
         fields = ['id', 'username', 'email', 'gender', 'city', ]
